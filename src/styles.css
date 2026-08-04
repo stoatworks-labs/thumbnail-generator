@@ -1,0 +1,450 @@
+/* Dark, dense, and built for a laptop on a production desk. */
+
+:root {
+  --bg: #12151b;
+  --panel: #1a1e26;
+  --panel-2: #212632;
+  --line: #2c3341;
+  --ink: #e8ecf3;
+  --ink-dim: #97a1b3;
+  --accent: #4f9cf0;
+  --danger: #e0576b;
+  --ok: #5bc98d;
+  --radius: 8px;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.5 "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Helvetica, Arial,
+    sans-serif;
+}
+
+.app {
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 24px 20px 64px;
+}
+
+.app-head h1 {
+  margin: 0 0 4px;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+}
+
+.app-head p {
+  margin: 0 0 20px;
+  color: var(--ink-dim);
+  max-width: 70ch;
+}
+
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.col-main,
+.col-side {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px 16px;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+}
+
+.head-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* ---------- controls ---------- */
+
+button,
+select,
+input[type='text'],
+input[type='number'],
+textarea {
+  font: inherit;
+  color: var(--ink);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  border-color: #3d4759;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #07131f;
+  font-weight: 600;
+}
+
+button.big {
+  width: 100%;
+  padding: 11px;
+  margin-top: 6px;
+}
+
+button.danger {
+  color: var(--danger);
+}
+
+button.link {
+  background: none;
+  border: none;
+  color: var(--ink-dim);
+  padding: 0 2px;
+  text-decoration: underline;
+  font-size: 12px;
+}
+
+input[type='color'] {
+  width: 34px;
+  height: 28px;
+  padding: 2px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- source table ---------- */
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table.sources {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.sources th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+  font-weight: 600;
+  padding: 0 8px 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+table.sources td {
+  padding: 8px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+table.sources tr.selected td {
+  background: #1e2532;
+}
+
+table.sources input[type='text'] {
+  width: 100%;
+  min-width: 140px;
+}
+
+.filename {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-dim);
+  margin-top: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  word-break: break-all;
+}
+
+.icon-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon-glyph {
+  flex: none;
+  display: block;
+}
+
+.colour-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inherit {
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+
+.row-actions {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.row-actions button {
+  padding: 4px 7px;
+  line-height: 1;
+}
+
+.size-control {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.size-control .pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.size-control input[type='number'] {
+  width: 78px;
+}
+
+.size-control .unit,
+.size-control .resolved {
+  font-size: 12px;
+  color: var(--ink-dim);
+  white-space: nowrap;
+}
+
+.empty-note {
+  color: var(--ink-dim);
+  margin: 4px 2px;
+}
+
+/* ---------- bulk paste ---------- */
+
+.bulk {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.bulk label {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+
+.bulk textarea {
+  width: 100%;
+  resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+}
+
+.bulk-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* ---------- fields ---------- */
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+
+.field > label,
+.field > .label {
+  font-size: 12px;
+  color: var(--ink-dim);
+  padding-top: 7px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.check input[type='range'] {
+  flex: 1;
+  min-width: 90px;
+}
+
+.hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+
+.hint code,
+.check code {
+  background: var(--panel-2);
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.footer-text {
+  width: 100%;
+}
+
+/* ---------- preview ---------- */
+
+.preview-stage {
+  background: repeating-conic-gradient(#22262e 0% 25%, #1b1f27 0% 50%) 50% / 18px 18px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 130px;
+}
+
+/* The canvas is the FULL raster; CSS scales it to fit. */
+.preview-stage canvas {
+  max-width: 100%;
+  max-height: 44vh;
+  height: auto;
+  display: block;
+  border-radius: 3px;
+}
+
+.preview-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 9px 0 0;
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+
+.preview-meta strong {
+  color: var(--ink);
+}
+
+.swatch {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  border: 1px solid var(--line);
+  display: inline-block;
+}
+
+.preview.empty p,
+.problem {
+  color: var(--ink-dim);
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+.problem {
+  color: var(--danger);
+}
+
+/* ---------- results ---------- */
+
+.bar {
+  width: 100%;
+  height: 6px;
+  margin-top: 8px;
+}
+
+.result {
+  margin: 10px 0 0;
+  font-size: 13px;
+}
+
+.result.ok {
+  color: var(--ok);
+}
+
+.result.bad {
+  color: var(--danger);
+}

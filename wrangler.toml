@@ -1,0 +1,28 @@
+# Cloudflare deployment for Thumbnail Generator.
+#
+# A static-assets-only Worker: no server code, matching the rest of the fleet.
+# The fleet does NOT use Cloudflare Pages — `pages_build_output_dir` here would
+# fail with "Could not detect a directory containing static files", which reads
+# like a missing build step but is actually the wrong config key.
+#
+# Cloudflare builds this one (plain Vite, and it is the real tool rather than a
+# recording), so `dist/` stays out of git. Set in the Cloudflare project:
+#
+#   build command   npm ci && npm run build
+#   deploy command  npx wrangler deploy
+#
+# `public/_headers` is copied into dist/ by Vite and carries the CSP; the assets
+# runtime honours it. `npm run preview` does NOT apply it — use
+# `npm run serve:dist` to check the CSP for real.
+
+name = "thumbnail-generator"
+compatibility_date = "2026-07-30"
+
+[assets]
+directory = "./dist"
+
+# Attached here rather than by hand in the dashboard, so the hostname is part of
+# the repo and a fresh deploy cannot come up without it.
+[[routes]]
+pattern = "thumbnail-generator.stoatworks-labs.com"
+custom_domain = true
