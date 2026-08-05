@@ -1,5 +1,15 @@
 # Thumbnail Generator
 
+> **AI-assisted project.** This codebase was created with [Claude Code](https://claude.com/claude-code)
+> (Anthropic), directed and reviewed by a human author. The cards are built and checked in a
+> browser, with 71 tests behind them: they render at their true raster, long names shrink and then
+> wrap to two lines inside the margins, odd rasters such as 2056×1329 lay out correctly, and the PNG
+> encoder produces a valid file whose header matches the canvas. **No output has ever been loaded
+> onto an Eventmaster or a LiveCore frame.** PNG is a reasonable assumption about what those accept
+> rather than a measurement, and the size presets are generic rather than taken from either vendor's
+> documentation — which is why the encoder is a format registry, so a different format is one entry
+> rather than a rewrite.
+
 Bulk-build labelled source thumbnails for **Barco Eventmaster** and **Analog Way
 RCS2**. Type a list of sources, pick an icon, a size and a colour for each, and
 download the lot as a ZIP with one image per source, named after it.
