@@ -32,6 +32,10 @@ src/lib/filename.ts   label -> filename, and de-duplication
 src/lib/encode.ts     the pluggable format registry + canvas size limits
 src/lib/zip.ts        store-only ZIP writer (copied from ~/Projects/test-card)
 src/lib/export.ts     render every card, name, pack, download
+src/import/csv.ts     RFC 4180 parser, CSV/TSV/semicolon. Pure text
+src/import/mapping.ts headers -> fields, values -> Card, with warnings
+src/import/sheets.ts  Google Sheet URL shapes and their failure modes
+src/import/template.ts the starter CSV, which is also a test fixture
 src/render/icons.ts   icon geometry as pure data
 src/render/layout.ts  where everything goes. Pure numbers. Test this.
 src/render/draw.ts    the painters. The only file that touches a 2D context
@@ -74,6 +78,18 @@ test enforces it.
 **6. Adding an image format is `encode.ts` plus one line in `FormatId`.**
 Nothing else in the app knows what a PNG is. It was built this way because it is
 not yet confirmed what the target hardware accepts.
+
+**7. An import never coerces silently.**
+Every value `mapping.ts` cannot understand produces a warning naming the row,
+the field and the text, and falls back to the batch default. A spreadsheet with
+`1920*1080` in it must not quietly yield forty 1080p cards that look right.
+Nothing reaches the batch until the user has seen the staged preview.
+
+**8. The template CSV is a test fixture.**
+`template.ts` is imported by `mapping.test.ts`, which asserts it parses with
+**zero** warnings and demonstrates every size form. The template is the
+documentation, so if it stops being importable a test goes red rather than the
+docs quietly becoming wrong.
 
 ## What is NOT verified
 
@@ -121,9 +137,28 @@ comment at the top of `layout.ts`.
 with a rectangle that pokes outside the ring; counting it would inflate the box
 and shrink that icon for no visible reason.
 
+**Google answers a request for a sheet you cannot read with `200 OK` and an
+HTML sign-in page**, not an error status. Fed to a CSV parser that is one absurd
+row of markup and an import that looks like it half-worked. `looksLikeHtml()`
+runs before parsing. Do not remove it.
+
+**`/export?format=csv` is not categorically CORS-blocked.** An earlier comment
+here claimed it was; a real request on 2026-08-05 returned a readable 404, which
+means the endpoint does send CORS headers. It fails on *authorisation*, not on
+CORS. The published `/d/e/…/pub` link is still the one to recommend, but the
+wording must not tell users their link cannot possibly work.
+
+**Splitting on commas outside quotes matters for delimiter sniffing too.** A
+tab-separated paste containing `"Lectern, stage left"` would otherwise look
+comma-heavy and be parsed as CSV, putting the whole row in one cell.
+
+**`1920x1080` and `16x9` are told apart by magnitude, not separator.** `x` is a
+legitimate ratio separator and people write `16x9`. Anything with both numbers
+under 100 is a ratio.
+
 ## Testing
 
-`npm test` — 71 tests, all offline, no browser needed.
+`npm test` — 128 tests, all offline, no browser needed.
 
 `export.test.ts` stubs `OffscreenCanvas` and `Path2D` and drives the real
 `exportBatch`, then reads the resulting archive back with Python's `zipfile`. It

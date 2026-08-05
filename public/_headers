@@ -1,8 +1,14 @@
+# connect-src carries docs.google.com AND *.googleusercontent.com because a
+# published-sheet CSV request is answered with a redirect to a
+# doc-XX-XX-sheets.googleusercontent.com host. CSP checks every hop of a
+# redirect chain, so allowing only the first one blocks the fetch at the
+# redirect with an error that names the wrong host. Everything else stays
+# 'self' — no other origin is contacted.
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://docs.google.com https://*.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'
 
 /assets/*
   Cache-Control: public, max-age=31536000, immutable

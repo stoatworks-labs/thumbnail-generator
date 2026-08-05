@@ -8,7 +8,7 @@ Command reference. For the model, the invariants and the traps, read
 ```bash
 npm install
 npm run dev          # vite dev server (fleet launch.json: port 5210)
-npm test             # vitest — 71 tests, no browser needed
+npm test             # vitest — 128 tests, no browser needed
 npm run test:watch
 npm run build        # tsc -b && vite build -> dist/
 npm run preview      # serve the built dist/ (does NOT apply _headers)

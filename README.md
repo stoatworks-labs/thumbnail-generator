@@ -2,7 +2,7 @@
 
 > **AI-assisted project.** This codebase was created with [Claude Code](https://claude.com/claude-code)
 > (Anthropic), directed and reviewed by a human author. The cards are built and checked in a
-> browser, with 71 tests behind them: they render at their true raster, long names shrink and then
+> browser, with 128 tests behind them: they render at their true raster, long names shrink and then
 > wrap to two lines inside the margins, odd rasters such as 2056×1329 lay out correctly, and the PNG
 > encoder produces a valid file whose header matches the canvas. **No output has ever been loaded
 > onto an Eventmaster or a LiveCore frame.** PNG is a reasonable assumption about what those accept
@@ -36,6 +36,52 @@ footer bottom-right. Both are on by default and can be turned off.
    spread them around the hue wheel.
 5. **Generate.** You get a ZIP of images plus a `manifest.csv` listing which
    file went with which source, at what size and colour.
+
+## Importing a list
+
+Three ways in, under **Import**: a **CSV file**, a **paste** (copying straight
+out of a spreadsheet works — that arrives as tab-separated and is handled), or a
+**published Google Sheet**.
+
+Four columns, of which only `name` is required. A blank cell means "use the
+batch default".
+
+| Column | Accepts |
+| --- | --- |
+| `name` | Anything. Also matches a heading called source, label, input, title. |
+| `icon` | An icon name (`camera`, `Video camera`, `usb`) or a synonym — `cam`, `PC`, `MacBook`, `screen`, `VT`, `PowerPoint`, `SSD` and others. |
+| `colour` | `#1f6fd0`, `1f6fd0`, `#f00`, or a name: red, orange, amber, yellow, lime, green, teal, cyan, blue, navy, indigo, purple, violet, magenta, pink, brown, grey, black, white. |
+| `size` | `1920x1080`, a ratio `16:9`, a ratio with a long edge `16:9@2560`, or a preset `1080p` / `4K` / `720p`. |
+
+Headings are matched loosely, so `Source Name`, `source_name` and `SOURCE NAME`
+all work, in any column order. If no heading is recognised the columns are read
+in order as name, icon, colour, size — which is what a bare list pasted from one
+column actually is.
+
+**Nothing is applied until you have seen what parsed.** The preview says how
+many sources it found, which heading it took each column from, which headings it
+ignored, and every value it could not understand — with the spreadsheet row
+number, so you can go and fix it. Values it cannot read fall back to the batch
+default and are listed; they are never silently guessed at. Then you choose to
+add them to what is already there, or replace everything.
+
+**Download a template CSV** from the same panel. It is a working example — one
+row per accepted spelling — and importing it unchanged gives you eight cards.
+
+### Google Sheets
+
+Use **File ▸ Share ▸ Publish to web**, pick the tab, choose **Comma-separated
+values (.csv)**, and paste that link. A normal `/edit` link is flagged before it
+is fetched: it can work if the sheet is shared so anyone with the link can view
+it, but Google answers with a sign-in page otherwise — and that page comes back
+as `200 OK`, so it is checked for and reported rather than parsed as if it were
+your data.
+
+This path has **not been tried against a real published sheet** — that needs a
+Google account. Every branch is covered by tests with an injected `fetch`, and
+the one real observation is that Google's `/export` endpoint does send CORS
+headers (it returned a readable 404). If it does not work for you, the paste and
+file routes need no network at all.
 
 ## Filenames
 
@@ -85,10 +131,12 @@ npm run dev
 npm test
 ```
 
-71 tests, all offline. The pure layers — layout geometry, colour derivation,
-filename policy, icon bounds, the ZIP writer — are unit tested, and
-`export.test.ts` drives the real export end to end against a stubbed canvas and
-reads the resulting archive back with Python's `zipfile`.
+128 tests, all offline. The pure layers — layout geometry, colour derivation,
+filename policy, icon bounds, the ZIP writer, the CSV parser and the import
+mapping — are unit tested. `export.test.ts` drives the real export end to end
+against a stubbed canvas and reads the resulting archive back with Python's
+`zipfile`, and `sheets.test.ts` drives every Google Sheets failure path with an
+injected `fetch`.
 
 See [AGENTS.md](AGENTS.md) for the model, the invariants and the traps.
 

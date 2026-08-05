@@ -1,4 +1,5 @@
 import { ExportPanel } from './ExportPanel'
+import { ImportPanel } from './ImportPanel'
 import { Preview } from './Preview'
 import { SourceTable } from './SourceTable'
 import { StylePanel } from './StylePanel'
@@ -17,6 +18,7 @@ export function App() {
       <main>
         <div className="col-main">
           <SourceTable />
+          <ImportPanel />
         </div>
         <div className="col-side">
           <section className="panel preview-panel">

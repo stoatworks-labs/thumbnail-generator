@@ -25,6 +25,13 @@ type State = {
   addCard: () => void
   /** Paste-a-list: one source per line. The reason this tool exists. */
   addMany: (text: string, iconId: string) => number
+  /**
+   * Bring in cards from an import. `replace` swaps the batch out; otherwise
+   * they are appended. Both are offered because re-importing a corrected
+   * spreadsheet should not leave the old rows behind, and adding a second
+   * department's list to the first should not wipe it.
+   */
+  importCards: (cards: Card[], replace: boolean) => void
   updateCard: (id: string, patch: Partial<Card>) => void
   removeCard: (id: string) => void
   moveCard: (id: string, delta: number) => void
@@ -66,6 +73,12 @@ export const useStore = create<State>()(
         }))
         return names.length
       },
+
+      importCards: (cards, replace) =>
+        set((s) => ({
+          batch: { ...s.batch, cards: replace ? cards : [...s.batch.cards, ...cards] },
+          selectedId: cards[0]?.id ?? (replace ? null : s.selectedId),
+        })),
 
       updateCard: (id, patch) =>
         set((s) => ({
