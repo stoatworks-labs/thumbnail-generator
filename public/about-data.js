@@ -14,8 +14,8 @@ window.STOATWORKS_ABOUT = Object.assign({
   "slug": "thumbnail-generator",
   "version": "v0.1.0",
   "hook": "Source thumbnails for a whole rig, in one go",
-  "licence": "",
+  "licence": "MIT",
   "guide": "",
-  "page": "https://stoatworks-labs.com/web-tools#thumbnail-generator",
-  "repo": ""
+  "page": "https://stoatworks-labs.com/software/thumbnail-generator/",
+  "repo": "https://github.com/stoatworks-labs/thumbnail-generator"
 }, window.STOATWORKS_ABOUT || {});

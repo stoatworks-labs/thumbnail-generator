@@ -143,10 +143,11 @@ row of markup and an import that looks like it half-worked. `looksLikeHtml()`
 runs before parsing. Do not remove it.
 
 **`/export?format=csv` is not categorically CORS-blocked.** An earlier comment
-here claimed it was; a real request on 2026-08-05 returned a readable 404, which
-means the endpoint does send CORS headers. It fails on *authorisation*, not on
-CORS. The published `/d/e/…/pub` link is still the one to recommend, but the
-wording must not tell users their link cannot possibly work.
+here claimed it was; real requests on 2026-08-05 — both `/export` and the
+published `/d/e/…/pub` — passed CSP and CORS from the deployed origin and
+returned readable 404s for made-up ids. Both endpoints send CORS headers; they
+fail on *authorisation*, not on CORS. The published link is still the one to
+recommend, but the wording must not tell users their link cannot possibly work.
 
 **Splitting on commas outside quotes matters for delimiter sniffing too.** A
 tab-separated paste containing `"Lectern, stage left"` would otherwise look

@@ -25,11 +25,16 @@
  * An edit URL is therefore converted and *flagged* rather than refused: it may
  * well work, and the flag says what to do when it does not.
  *
- * NOT VERIFIED AGAINST A REAL SHEET. Every path here is exercised by tests
- * with an injected `fetch`, and the 404 above is the only real-network
- * observation. Whether a genuinely published sheet returns readable CSV to
- * this origin has not been tried, because it needs somebody's actual Google
- * account.
+ * WHAT HAS ACTUALLY BEEN OBSERVED (2026-08-05, from the deployed origin
+ * https://thumbnail-generator.stoatworks-labs.com):
+ *   - a request to /d/e/<nonexistent-token>/pub?output=csv passed CSP and CORS
+ *     and returned a readable 404. So the published endpoint IS reachable
+ *     cross-origin from this origin, and `connect-src` is right.
+ *   - the same for /d/<nonexistent-id>/export?format=csv.
+ *
+ * NOT verified: that a genuinely published sheet returns its CSV here. That
+ * needs a real Google account, so it has not been tried. Everything else is
+ * covered by tests with an injected `fetch`.
  *
  * THE SILENT FAILURE THIS GUARDS
  * ------------------------------

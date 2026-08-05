@@ -77,11 +77,12 @@ it, but Google answers with a sign-in page otherwise — and that page comes bac
 as `200 OK`, so it is checked for and reported rather than parsed as if it were
 your data.
 
-This path has **not been tried against a real published sheet** — that needs a
-Google account. Every branch is covered by tests with an injected `fetch`, and
-the one real observation is that Google's `/export` endpoint does send CORS
-headers (it returned a readable 404). If it does not work for you, the paste and
-file routes need no network at all.
+What has been checked from the deployed site: a request to the published-CSV
+endpoint passes the page's content-security policy and Google's CORS, and comes
+back readable — tested with a made-up token, which returned a clean 404. So the
+plumbing works. What has **not** been checked is a genuinely published sheet
+returning its rows, because that needs a real Google account. If it misbehaves
+for you, the file and paste routes need no network at all.
 
 ## Filenames
 

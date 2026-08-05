@@ -44,8 +44,11 @@
       Classic + defer on purpose: it reads its config off this tag, and
       document.currentScript is null inside a module.
 
-      No data-repo: this repo is private, and the footer leaves the "source is
-      on GitHub" link out entirely rather than rendering one that 404s.
+      No data-repo, and none is needed: the repo and licence reach the footer
+      and the About dialog through about-data.js, which sync-about.py generates
+      from the website's projects.json. That was empty while this repo was
+      private and filled itself in when it went public — which is the point of
+      generating it rather than hardcoding a link here that would have 404'd.
     -->
     <script
       src="/support-footer.js"
