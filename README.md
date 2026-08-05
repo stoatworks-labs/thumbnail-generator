@@ -82,6 +82,10 @@ reads the resulting archive back with Python's `zipfile`.
 
 See [AGENTS.md](AGENTS.md) for the model, the invariants and the traps.
 
+<!-- attributions:start -->
+This project is built on other people's work — see [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
+<!-- attributions:end -->
+
 ## Licence
 
 MIT. Not a distributable product — this repo exists to feed the deployed web

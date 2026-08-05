@@ -141,15 +141,27 @@ which is the part that actually breaks.
   saves a dependency and buys ~0%.
 - **No releases or installers.** This repo exists to feed the deployed app.
 
-## Not done yet — fleet registration
+## Generated files — never hand-edit
 
-Both of these are **generated** by `stoatworks-backend` and must not be
-hand-written here:
+All four are written by `stoatworks-backend` and are overwritten by the next
+sync:
 
-- **`ATTRIBUTIONS.md`** — from `scripts/sync-attributions.py`.
-- **The About dialog** (`public/about.js`, `public/about-data.js`) — from
-  `scripts/sync-about.py`, whose facts come from the website's `projects.json`.
-  `index.html` has a comment where the two script tags go.
+- **`ATTRIBUTIONS.md`** and the marker block in `README.md` — from
+  `scripts/sync-attributions.py --only thumbnail-generator`. Components are
+  *detected* from the tree, not listed by hand.
+- **`public/about.js` / `public/about-data.js`** — from
+  `scripts/sync-about.py --apply --only thumbnail-generator`. The facts come
+  from the website's `projects.json`; this repo is registered in that script's
+  `TARGETS` map as `("thumbnail-generator", "web", "public")`.
+- **`public/support-footer.js`** — from `scripts/sync-support-footer.sh`.
 
-Add the project to the website's `projects.json`, run both syncs, then wire them
-up. `public/support-footer.js` is already vendored and needs no per-project data.
+Where the project is registered, if any of it needs changing:
+
+| What | Where |
+| --- | --- |
+| Project card, summary, thumbnail | `stoatworks-website/src/data/projects.json` |
+| Nav entry and hosted URL | `stoatworks-website/src/data/webtools.json` |
+| Page copy (headline, features, caveats) | `stoatworks-website/src/pages/web-tools.astro`, keyed by slug |
+| Thumbnail source screenshot + crop | `stoatworks-website/scripts/shots.json` |
+| Docker image / Unraid template | `stoatworks-unraid/fleet.json` + `unraid.json` |
+| Dev server port (5210) | `~/.claude/launch.json` and `.claude/launch.json` |
