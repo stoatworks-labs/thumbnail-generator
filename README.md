@@ -17,6 +17,10 @@ download the lot as a ZIP with one image per source, named after it.
 Runs entirely in the browser. Nothing is uploaded; the batch you build is saved
 in the browser's local storage so it survives closing the tab.
 
+![Thumbnail Generator with nine sources named and typed, each given its own colour, and one card previewed](docs/screenshots/thumbnail-generator.png)
+
+<sub>Nine sources named and typed — a vision mixer, PCs, cameras, a VT, Slido, a lectern, playback — each given its own colour automatically, with the 1920 × 1080 card for Vision 4 previewed on the right before the lot goes out as a ZIP.</sub>
+
 ## What a card looks like
 
 A radial gradient in the source's colour, a white knockout icon, and the source
