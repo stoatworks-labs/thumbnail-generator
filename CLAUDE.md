@@ -18,12 +18,15 @@ npm run typecheck    # tsc -b
 
 ## Deploy
 
+A push to `main` deploys it: `.github/workflows/deploy.yml` runs the tests,
+builds, runs `wrangler deploy` and checks the live page is serving the new
+build. Changes to `docs/**` and `*.md` don't trigger it. By hand:
+
 ```bash
 cf-run npx wrangler deploy
 ```
 
-Or connect the repo in Cloudflare: build `npm ci && npm run build`, deploy
-`npx wrangler deploy`. A static-assets **Worker**, not a Pages project.
+A static-assets **Worker**, not a Pages project.
 
 ## Ground rules
 
