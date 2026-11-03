@@ -45,6 +45,10 @@ body {
   max-width: 70ch;
 }
 
+.app-head p a {
+  color: inherit;
+}
+
 main {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 380px;

@@ -11,7 +11,10 @@ export function App() {
         <h1>Thumbnail Generator</h1>
         <p>
           Bulk-build labelled source thumbnails for Eventmaster and RCS2. Name each source, pick an
-          icon, a size and a colour, then download the lot as a ZIP.
+          icon, a size and a colour, then download the lot as a ZIP.{' '}
+          <a href="https://stoatworks-labs.com/web-tools/thumbnail-generator/" target="_blank" rel="noopener">
+            About this tool
+          </a>
         </p>
       </header>
 

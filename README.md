@@ -14,6 +14,8 @@ afternoon in an image editor making forty cards that differ by one word.
 It runs entirely in the browser. Nothing's uploaded, and the batch you build is
 saved in the browser's local storage, so it survives closing the tab.
 
+It's live at [thumbnail-generator.stoatworks-labs.com](https://thumbnail-generator.stoatworks-labs.com). Its [page on Stoatworks Labs](https://stoatworks-labs.com/web-tools/thumbnail-generator/) covers running it on your own server, and the [project page](https://stoatworks-labs.com/software/thumbnail-generator/) has the user guide.
+
 ![Thumbnail Generator with nine sources named and typed, each given its own colour, and one card previewed](docs/screenshots/thumbnail-generator.png)
 
 <sub>Nine sources named and typed (a vision mixer, PCs, cameras, a VT, Slido, a lectern, playback), each given its own colour automatically, with the 1920 × 1080 card for Vision 4 previewed on the right before the lot goes out as a ZIP.</sub>

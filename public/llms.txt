@@ -1,0 +1,15 @@
+# Thumbnail Generator
+
+> Every source's thumbnail, built from the patch list
+
+Builds the labelled source thumbnails an Eventmaster or an RCS2 shows on its multiviewer, for a whole rig at once. Type or paste the source list, give each one an icon, a size and a colour, and download a ZIP with one image per source, named after it, plus a manifest matching each file to its source. It all runs in the browser.
+
+It runs in the browser at https://thumbnail-generator.stoatworks-labs.com/ and is free to use.
+
+## Links
+
+- [Thumbnail Generator on Stoatworks Labs](https://stoatworks-labs.com/web-tools/thumbnail-generator/): what it is, with links to everything else
+- [Project page](https://stoatworks-labs.com/software/thumbnail-generator/)
+- [User guide](https://stoatworks-labs.com/software/thumbnail-generator/guide/)
+- [Source code](https://github.com/stoatworks-labs/thumbnail-generator)
+- [Self-hosting](https://stoatworks-labs.com/web-tools/self-hosting/): running it on your own server
