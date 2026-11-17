@@ -1,17 +1,19 @@
-/* Dark, dense, and built for a laptop on a production desk. */
+/* Dense, and built for a laptop on a production desk. The colours come from the
+   shared Stoatworks theme (stoatworks-theme.css, imported first), so the page
+   follows the system's light or dark setting the way every fleet tool does. */
 
 :root {
-  --bg: #12151b;
-  --panel: #1a1e26;
-  --panel-2: #212632;
-  --line: #2c3341;
-  --ink: #e8ecf3;
-  --ink-dim: #97a1b3;
-  --accent: #4f9cf0;
-  --danger: #e0576b;
-  --ok: #5bc98d;
-  --radius: 8px;
-  color-scheme: dark;
+  --bg: var(--sw-paper);
+  --panel: var(--sw-card);
+  --panel-2: var(--sw-tint);
+  --line: var(--sw-line);
+  --ink: var(--sw-ink);
+  --ink-dim: var(--sw-muted);
+  --accent: var(--sw-accent);
+  --danger: var(--sw-bad);
+  --ok: var(--sw-ok);
+  --warn: var(--sw-warn);
+  --radius: var(--sw-radius);
 }
 
 * {
@@ -23,20 +25,25 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font: 15px/1.5 "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Helvetica, Arial,
-    sans-serif;
+  font: 15px/1.5 var(--sw-font);
 }
 
 .app {
   max-width: 1680px;
   margin: 0 auto;
-  padding: 24px 20px 64px;
+  padding: 0 20px 64px;
 }
 
-.app-head h1 {
-  margin: 0 0 4px;
-  font-size: 24px;
-  letter-spacing: -0.01em;
+/* The navy bar runs the full width of the window while its contents stay on the
+   page's column: border-image paints past the box without widening the page. */
+.app-bar {
+  padding: 10px 0;
+  margin-bottom: 16px;
+  border-image: linear-gradient(var(--sw-navy), var(--sw-navy)) fill 0 / 0 / 0 100vmax;
+}
+
+.app-bar .about {
+  margin-left: auto;
 }
 
 .app-head p {
@@ -87,10 +94,8 @@ main {
 
 .panel-head h2 {
   margin: 0;
-  font-size: 15px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--ink-dim);
+  font-size: 1.05rem;
+  color: var(--ink);
 }
 
 .head-actions {
@@ -101,28 +106,31 @@ main {
 
 /* ---------- controls ---------- */
 
-button,
+/* Buttons are scoped to main: a bare `button` rule here would beat the theme's
+   navy-bar buttons, which are layered under this file. */
+main button,
 select,
 input[type='text'],
 input[type='number'],
 textarea {
   font: inherit;
   color: var(--ink);
-  background: var(--panel-2);
+  background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: var(--sw-radius-sm);
   padding: 6px 8px;
 }
 
-button {
+main button {
   cursor: pointer;
+  padding: 6px 12px;
 }
 
-button:hover:not(:disabled) {
-  border-color: #3d4759;
+main button:hover:not(:disabled) {
+  border-color: var(--accent);
 }
 
-button:disabled {
+main button:disabled {
   opacity: 0.4;
   cursor: default;
 }
@@ -130,8 +138,12 @@ button:disabled {
 button.primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: #07131f;
+  color: var(--sw-on-accent);
   font-weight: 600;
+}
+
+button.primary:hover:not(:disabled) {
+  filter: brightness(1.08);
 }
 
 button.big {
@@ -157,7 +169,7 @@ input[type='color'] {
   width: 34px;
   height: 28px;
   padding: 2px;
-  background: var(--panel-2);
+  background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 6px;
   cursor: pointer;
@@ -206,7 +218,7 @@ table.sources td {
 }
 
 table.sources tr.selected td {
-  background: #1e2532;
+  background: color-mix(in srgb, var(--accent) 8%, var(--panel));
 }
 
 table.sources input[type='text'] {
@@ -219,7 +231,7 @@ table.sources input[type='text'] {
   font-size: 11px;
   color: var(--ink-dim);
   margin-top: 3px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--sw-mono);
   word-break: break-all;
 }
 
@@ -304,7 +316,7 @@ table.sources input[type='text'] {
 .bulk textarea {
   width: 100%;
   resize: vertical;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--sw-mono);
   font-size: 13px;
 }
 
@@ -415,7 +427,7 @@ table.sources input[type='text'] {
 .import-body textarea,
 .import-body input[type='url'] {
   width: 100%;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--sw-mono);
   font-size: 13px;
   resize: vertical;
 }
@@ -458,7 +470,7 @@ table.sources input[type='text'] {
   margin: 0;
   font-size: 12px;
   line-height: 1.5;
-  color: #e8c07a;
+  color: var(--warn);
 }
 
 .staged {
@@ -496,7 +508,7 @@ table.sources input[type='text'] {
 .warnings {
   margin: 0 0 10px;
   font-size: 12px;
-  color: #e8c07a;
+  color: var(--warn);
 }
 
 .warnings summary {
@@ -520,10 +532,15 @@ table.sources input[type='text'] {
 
 /* ---------- preview ---------- */
 
+/* The card under the preview is output, so it sits on the stage, dark in both modes. */
 .preview-stage {
-  background: repeating-conic-gradient(#22262e 0% 25%, #1b1f27 0% 50%) 50% / 18px 18px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
+  background: repeating-conic-gradient(
+      color-mix(in srgb, var(--sw-stage-ink) 9%, var(--sw-stage)) 0% 25%,
+      color-mix(in srgb, var(--sw-stage-ink) 5%, var(--sw-stage)) 0% 50%
+    )
+    50% / 18px 18px;
+  border: 1px solid var(--sw-stage-line);
+  border-radius: var(--sw-radius-sm);
   padding: 8px;
   display: flex;
   align-items: center;
@@ -570,8 +587,9 @@ table.sources input[type='text'] {
   text-align: center;
 }
 
+/* On the stage, so lifted towards the stage ink to read on dark in both modes. */
 .problem {
-  color: var(--danger);
+  color: color-mix(in srgb, var(--danger) 55%, var(--sw-stage-ink));
 }
 
 /* ---------- results ---------- */

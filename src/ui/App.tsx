@@ -8,7 +8,14 @@ export function App() {
   return (
     <div className="app">
       <header className="app-head">
-        <h1>Thumbnail Generator</h1>
+        <div className="sw-bar app-bar">
+          <h1 className="sw-brand">
+            <span className="sw-mark" aria-hidden="true">▧</span> Thumbnail Generator
+          </h1>
+          <button type="button" className="about" data-stoatworks-about>
+            About
+          </button>
+        </div>
         <p>
           Bulk-build labelled source thumbnails for Eventmaster and RCS2. Name each source, pick an
           icon, a size and a colour, then download the lot as a ZIP.{' '}

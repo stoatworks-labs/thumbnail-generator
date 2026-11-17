@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { registerServiceWorker } from './register-sw'
 
 import { App } from './ui/App'
+// Vendored from stoatworks-backend/theme by scripts/sync-theme.sh; loaded first so styles.css layers over it.
+import './stoatworks-theme.css'
 import './styles.css'
 
 const root = document.getElementById('root')

@@ -6,21 +6,46 @@
  * too, which is far easier to notice than exporting forty of them first.
  */
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { drawIcon } from '../render/draw'
 import { ICONS, type Icon, iconById } from '../render/icons'
 
+/** The theme's ink colour (`--sw-ink`), which changes with the system's light or dark setting. */
+function readInk(): string {
+  return getComputedStyle(document.documentElement).getPropertyValue('--sw-ink').trim() || '#16212c'
+}
+
+/**
+ * The page's ink, for a glyph drawn on a canvas: a canvas cannot follow a CSS
+ * colour by itself, so it is read when the glyph mounts and again whenever the
+ * system switches between light and dark.
+ */
+function useInk(): string {
+  const [ink, setInk] = useState(readInk)
+  useEffect(() => {
+    setInk(readInk())
+    const mq = window.matchMedia?.('(prefers-color-scheme: dark)')
+    if (!mq) return
+    const update = () => setInk(readInk())
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+  return ink
+}
+
 export function IconGlyph({
   iconId,
   size = 26,
-  colour = '#e8ecf3',
+  colour,
 }: {
   iconId: string
   size?: number
   colour?: string
 }) {
   const ref = useRef<HTMLCanvasElement>(null)
+  const ink = useInk()
+  const paint = colour ?? ink
 
   useEffect(() => {
     const canvas = ref.current
@@ -38,9 +63,9 @@ export function IconGlyph({
       ctx,
       iconById(iconId),
       { x: pad, y: pad, w: canvas.width - pad * 2, h: canvas.height - pad * 2 },
-      colour,
+      paint,
     )
-  }, [iconId, size, colour])
+  }, [iconId, size, paint])
 
   return (
     <canvas
